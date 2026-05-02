@@ -13,16 +13,15 @@
 </head>
 <body class="bg-white text-black min-h-screen flex flex-col">
 <nav class="maroon flex justify-between items-center p-4">
-  <!-- Left side: Brand + main links -->
   <div class="flex gap-4 items-center">
     <a href="index.html" class="text-2xl font-bold">MaroonCart</a>
     <a href="index.html" class="hover:underline text-sm">Home</a>
     <a href="product.html" class="hover:underline text-sm">Products</a>
     <a href="cart.html" class="hover:underline text-sm">Cart (<span id="cartCount">0</span>)</a>
-    <a href="admin.html" id="adminLink" class="hover:underline text-sm hidden">Admin</a>
+    <!-- Admin link hamesha dikhega -->
+    <a href="admin.html" class="hover:underline text-sm bg-yellow-500 text-black px-2 py-1 rounded font-semibold">Admin</a>
   </div>
 
-  <!-- Right side: Search + Auth -->
   <div class="flex gap-4 items-center">
     <input type="text" id="searchBar" placeholder="Search products..." 
            class="px-2 py-1 rounded text-black" onkeyup="searchProducts()" />
