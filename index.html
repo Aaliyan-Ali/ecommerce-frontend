@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MaroonCart - Home</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .maroon { background-color: #800000; color: white; }
+    .maroon-text { color: #800000; }
+    .maroon-border { border-color: #800000; }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col">
+
+  <!-- Navbar -->
+  <nav class="maroon flex justify-between items-center p-4">
+  <!-- Left side: Brand + main links -->
+  <div class="flex gap-4 items-center">
+    <a href="index.html" class="text-2xl font-bold">MaroonCart</a>
+    <a href="index.html" class="hover:underline text-sm">Home</a>
+    <a href="product.html" class="hover:underline text-sm">Products</a>
+    <a href="cart.html" class="hover:underline text-sm">Cart (<span id="cartCount">0</span>)</a>
+    <a href="admin.html" id="adminLink" class="hover:underline text-sm hidden">Admin</a>
+  </div>
+
+  <!-- Right side: Search + Auth -->
+  <div class="flex gap-4 items-center">
+    <input type="text" id="searchBar" placeholder="Search products..." 
+           class="px-2 py-1 rounded text-black" onkeyup="searchProducts()" />
+    <button onclick="openModal('loginModal')" id="loginBtn" class="hover:underline">Login</button>
+    <button onclick="openModal('signupModal')" id="signupBtn" class="hover:underline">Sign Up</button>
+    <span id="userGreeting" class="hidden"></span>
+    <button onclick="logout()" id="logoutBtn" class="hidden hover:underline">Logout</button>
+  </div>
+</nav>
+  <!-- Hero / Featured Products -->
+  <main class="flex-grow p-6">
+    <h1 class="text-3xl font-bold maroon-text mb-6">Featured Products</h1>
+    <div id="featuredProducts" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+  </main>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-6 w-80">
+      <h2 class="text-xl font-bold maroon-text mb-4">Login</h2>
+      <input type="email" id="loginEmail" placeholder="Email" class="w-full border p-2 mb-2 rounded" />
+      <input type="password" id="loginPassword" placeholder="Password" class="w-full border p-2 mb-4 rounded" />
+      <button onclick="login()" class="maroon w-full py-2 rounded">Login</button>
+      <button onclick="closeModal('loginModal')" class="mt-2 text-sm maroon-text">Close</button>
+    </div>
+  </div>
+
+  <!-- Signup Modal (similar) -->
+  <div id="signupModal" class="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center hidden">
+    <div class="bg-white rounded-lg p-6 w-80">
+      <h2 class="text-xl font-bold maroon-text mb-4">Sign Up</h2>
+      <input type="text" id="signupName" placeholder="Name" class="w-full border p-2 mb-2 rounded" />
+      <input type="email" id="signupEmail" placeholder="Email" class="w-full border p-2 mb-2 rounded" />
+      <input type="password" id="signupPassword" placeholder="Password" class="w-full border p-2 mb-4 rounded" />
+      <button onclick="signup()" class="maroon w-full py-2 rounded">Sign Up</button>
+      <button onclick="closeModal('signupModal')" class="mt-2 text-sm maroon-text">Close</button>
+    </div>
+  </div>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Panel - MaroonCart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    .maroon { background-color: #800000; color: white; }
+    .maroon-text { color: #800000; }
+    .maroon-border { border-color: #800000; }
+    .tab-active { background-color: #800000; color: white; }
+    .tab { cursor: pointer; padding: 8px 16px; border-radius: 4px; }
+  </style>
+</head>
+<body class="bg-white text-black min-h-screen flex flex-col">
+
+ <nav class="maroon flex justify-between items-center p-4">
+  <!-- Left side: Brand + main links -->
+  <div class="flex gap-4 items-center">
+    <a href="index.html" class="text-2xl font-bold">MaroonCart</a>
+    <a href="index.html" class="hover:underline text-sm">Home</a>
+    <a href="product.html" class="hover:underline text-sm">Products</a>
+    <a href="cart.html" class="hover:underline text-sm">Cart (<span id="cartCount">0</span>)</a>
+    <a href="admin.html" id="adminLink" class="hover:underline text-sm hidden">Admin</a>
+  </div>
+
+  <!-- Right side: Search + Auth -->
+  <div class="flex gap-4 items-center">
+    <input type="text" id="searchBar" placeholder="Search products..." 
+           class="px-2 py-1 rounded text-black" onkeyup="searchProducts()" />
+    <button onclick="openModal('loginModal')" id="loginBtn" class="hover:underline">Login</button>
+    <button onclick="openModal('signupModal')" id="signupBtn" class="hover:underline">Sign Up</button>
+    <span id="userGreeting" class="hidden"></span>
+    <button onclick="logout()" id="logoutBtn" class="hidden hover:underline">Logout</button>
+  </div>
+</nav>
+
+  <!-- If not admin, show message -->
+  <div id="notAdmin" class="flex-grow flex items-center justify-center text-2xl maroon-text hidden">
+    Access Denied. Admin only.
+  </div>
+
+  <main id="adminContent" class="flex-grow p-6 hidden">
+    <!-- Tabs -->
+    <div class="flex gap-2 mb-6">
+      <button onclick="switchTab('analytics')" id="tab-analytics" class="tab tab-active">Analytics</button>
+      <button onclick="switchTab('users')" id="tab-users" class="tab bg-gray-200">Customers</button>
+      <button onclick="switchTab('products')" id="tab-products" class="tab bg-gray-200">Products</button>
+      <button onclick="switchTab('orders')" id="tab-orders" class="tab bg-gray-200">Orders</button>
+    </div>
+
+    <!-- Tab Panels -->
+    <div id="panel-analytics" class="tab-panel">
+      <h2 class="text-2xl font-bold maroon-text mb-4">Store Analytics</h2>
+      <div id="analyticsData" class="grid grid-cols-2 md:grid-cols-4 gap-4"></div>
+    </div>
+
+    <div id="panel-users" class="tab-panel hidden">
+      <h2 class="text-2xl font-bold maroon-text mb-4">Customers</h2>
+      <div id="usersTable" class="overflow-x-auto"></div>
+    </div>
+
+    <div id="panel-products" class="tab-panel hidden">
+      <h2 class="text-2xl font-bold maroon-text mb-4">Manage Products</h2>
+      <button onclick="showAddProductForm()" class="maroon py-2 px-4 rounded mb-4">Add New Product</button>
+      <div id="addProductForm" class="hidden border p-4 rounded mb-4">
+        <input type="text" id="prodName" placeholder="Name" class="w-full border p-2 mb-2 rounded" />
+        <input type="number" id="prodPrice" placeholder="Price" class="w-full border p-2 mb-2 rounded" />
+        <input type="text" id="prodDesc" placeholder="Description" class="w-full border p-2 mb-2 rounded" />
+        <input type="text" id="prodImage" placeholder="Image URL" class="w-full border p-2 mb-2 rounded" />
+        <input type="number" id="prodStock" placeholder="Stock" class="w-full border p-2 mb-2 rounded" />
+        <button onclick="addProduct()" class="maroon py-2 px-4 rounded">Save Product</button>
+        <button onclick="hideAddProductForm()" class="ml-2 maroon-text underline">Cancel</button>
+      </div>
+      <div id="productsTable"></div>
+    </div>
+
+    <div id="panel-orders" class="tab-panel hidden">
+      <h2 class="text-2xl font-bold maroon-text mb-4">Orders (Delivery & Payment)</h2>
+      <div id="ordersTable" class="overflow-x-auto"></div>
+    </div>
+  </main>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+</body>
+</html>
