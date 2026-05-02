@@ -303,9 +303,33 @@ let activeTab = 'analytics';
 
 async function initAdmin() {
   if (!currentUser || currentUser.role !== 'admin') {
-    document.getElementById('notAdmin').classList.remove('hidden');
-    return;
+    // Show login prompt, hide dashboard
+    document.getElementById('adminLoginRequired').classList.remove('hidden');
+    document.getElementById('adminContent').classList.add('hidden');
+  } else {
+    document.getElementById('adminLoginRequired').classList.add('hidden');
+    document.getElementById('adminContent').classList.remove('hidden');
+    switchTab('analytics');
   }
+}
+
+// Admin login from admin page
+async function adminLogin() {
+  const email = document.getElementById('adminLoginEmail').value;
+  const password = document.getElementById('adminLoginPassword').value;
+  const res = await apiFetch('/auth/login', {
+    method: 'POST',
+    body: JSON.stringify({ email, password })
+  });
+  if (res.user) {
+    currentUser = res.user;
+    sessionStorage.setItem('user', JSON.stringify(currentUser));
+    initAdmin();
+  } else {
+    document.getElementById('adminLoginError').classList.remove('hidden');
+    document.getElementById('adminLoginError').textContent = res.message || 'Invalid credentials';
+  }
+}
   document.getElementById('adminContent').classList.remove('hidden');
   switchTab('analytics');
 }
